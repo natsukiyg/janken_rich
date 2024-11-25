@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>じゃんけん</title>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
+  <link rel="stylesheet" href="janken_rich.css">
+</head>
+
+<body>
+    <section class="title-section">
+        <h1>
+            <span class="title-part">ジャンケンマン</span>
+            <span class="subtitle-part"> JP ジャックポット</span>
+        </h1>
+    </section>
+
+    <!-- スタートボタン -->
+    <button class="start-button" id="start-button">スタート</button>
+
+    <div class="stage-info">
+        <p>第 <span id="stage-number">1</span> ステージ</p>
+    </div>
+    
+    <div id="game-base">
+        <div id="computer-side">
+            <div class="judge-texts">
+                <span class="judge" id="win">かち</span>
+                <span class="judge" id="draw">あいこ</span>
+                <span class="judge" id="lose">まけ</span>
+            </div>
+            <div id="computer-choice-container">
+               <!-- <p>コンピューター</p> -->
+                <div id="computer-choice"></div>  <!-- コンピュータの選択を表示 -->
+            </div>
+        </div><!--computer-side終了-->
+
+        <div id="player-side">
+            <div id="player-choice-container">
+                <div id="player-choice" class="choices">
+                    <img src="img/img_rock1.png" alt="グー" id="rock" class="choice-button" />
+                    <img src="img/img_scissors1.png" alt="チョキ" id="scissors" class="choice-button" />
+                    <img src="img/img_paper1.png" alt="パー" id="paper" class="choice-button" />
+                </div>
+            </div>
+        </div><!--player-side終了-->
+
+        <div class="result" id="result"></div>
+        <div id="win-info">勝利数： <span id="win-count">0</span></div>
+        <div id="loss-info">負けた数： <span id="loss-count">0</span></div>            
+        <!--コンピューターの選択画像を表示-->
+        <div class="computer-choice" id="computer-choice"></div>            
+        
+        <!--ボタンを中央に配置するためのdiv要素-->
+        <div class="button-container">
+         <!--もう1回勝負ボタン-->
+            <button class="play-again" id="play-again">もう1回勝負！</button>             
+        <!--次のステージへ進むボタン-->
+            <button class="next-stage" id="next-stage">次のステージへ進む</button>
+         <!--最初からやり直すボタン-->
+            <button class="restart" id="restart">最初からやり直す</button>
+        </div>
+        
+    </div> <!--game-base終了-->
+    
+    <script src="janken_rich.js"></script>
+</body>

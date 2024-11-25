@@ -1,0 +1,315 @@
+/* 全体のレイアウト */
+body {
+    font-family: "Noto Sans JP", sans-serif;
+    text-align: center;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+/*ステージ*/
+p {
+    font-family: "keifont", sans-serif;
+    font-size: 40px;  /* サイズは任意で調整 */
+    margin-top: 30px;
+}
+
+#stage-number {
+    font-size: 70px;
+    color: #F4E816;   /* 黄色 */
+    text-shadow: 
+        1px 1px 0px #4d4d4d,
+        -1px -1px 0px #4d4d4d,
+        1px -1px 0px #4d4d4d,
+        -1px 1px 0px #4d4d4d;
+    font-weight: bold;
+}
+
+/*ゲーム画面全体*/
+#game-base {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    position: relative;/*位置調整用*/
+}
+
+/*コンピューター側のレイアウト*/
+#computer-side {
+    width: 400px;
+    height: 420px;
+    background-color: #FFE6FF;
+    border: solid 5px #00B3B3;
+    margin-bottom: 30px;
+    z-index: 1;/*他の要素より後ろに配置*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#computer-choice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#computer-choice img {
+    width: 250px; /* 画像の幅を200pxに設定 */
+    height: auto; /* 高さは自動調整 */
+    display: block;
+    margin: 20px auto; /* 上下の余白 */
+    border-radius: 50%; /* 丸い枠にする */
+    background-color: black; /* 枠の内側を黒にする */
+    padding: 10px; /* 内側に少し余白を追加して枠と画像の間隔を調整 */
+    box-sizing: border-box; /* paddingを含めたボックスのサイズを指定 */
+    border-color: #00B3B3; /* 枠線を削除 */
+    overflow: hidden; /* 画像が枠を超えないようにする */
+    /*外側のチェック柄枠線*/
+    box-shadow: 0 0 0 10px white, 0 0 0 12px yellow; /*白と黄色のチェック柄枠*/
+}
+
+/*チェック柄の枠線の設定*/
+#computer-choice img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;/*丸い枠*/
+    background-image: linear-gradient(45deg, white 25%, transparent 25%),
+                      linear-gradient(-45deg, white 25%, transparent 25%);
+    background-size: 10px 10px; /*チェック柄のサイズ*/
+    background-position: 0 0, 5px 5px;/*チェック柄の位置*/
+    z-index: -1;/*画像の後ろに配置*/
+}
+
+/*プレイヤー側のレイアウト*/
+#player-side {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /*ボタン間の隙間*/
+    margin-bottom: 30px;/*結果表示との間隔*/
+    z-index: 2;/*プレイヤー側の手をコンピューターより前に配置*/
+}
+
+/* プレイヤーの選択肢ボタン */
+.choices {
+    display: flex;  /* 横並びにする */
+    justify-content: center;  /* 横並びにした画像を中央に配置 */
+    gap: 20px;  /* 画像間に隙間を設ける */
+    margin-top: 20px;  /* 上に少しスペースを追加 */
+}
+
+/*画像を囲むためのコンテナを追加*/
+.choice-button-container {
+    display: inline-block;
+    position: relative;
+    width: 100%; /*画像の幅に合わせる*/
+    height: 100%; /*画像の高さに合わせる*/
+    margin: 0 10px; /*画像の間に少し隙間を追加する*/
+}
+
+/* 画像のボタン */
+.choice-button {
+    width: 100px;  /* 画像の幅を指定 */
+    height: auto;  /* 高さは自動調整 */
+    display: block;
+    cursor: pointer;  /* クリックできるようにカーソルをポインタに変更 */
+    padding: 10px; /* 内側に少し余白を追加して枠と画像の間隔を調整 */
+    border: 2px solid #ccc;
+    border-radius: 50%; /*丸い枠にする*/
+    background-color: yellow; /*枠線の内側を黄色にする*/
+    box-sizing: border-box; /* paddingを含めたボックスのサイズを指定 */
+    border-color: none; /* 枠線を削除 */
+    overflow: hidden; /* 画像が枠を超えないようにする */
+    transition: transform 0.3s ease, opacity 0.3s ease;  /* 画像が大きくなるアニメーション */
+    position: relative;
+    z-index: 10; /*プレイヤーの選択画像を全面に表示*/
+}
+
+/* 画像をホバーした時に少し拡大するエフェクト */
+.choice-button:hover {
+    transform: scale(1.1);  /* 画像を少し大きくする */
+}
+
+.choice-button.inactive {
+    opacity: 0.4;
+}
+
+/* ボタンがクリックされたとき */
+.choice-button:active {
+    transform: scale(1.05);  /* クリック時に少し縮小 */
+}
+
+/*選択した手を強調する*/
+.choice-button.selected {
+    border: 3px solid #FF0000; /*赤い枠線*/
+    border-radius: 50%; /*枠を丸くする*/
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7); /*赤い影*/
+    transform: scale(1.2); /*選んだ手を少し大きく表示*/
+}
+
+/*背景の薄い赤を設定*/
+.choice-button.selected::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 0, 0, 0.3);
+    z-index: -1; /*画像より後ろに配置*/
+}
+
+/*勝ち負け判定　ボタン表示*/
+.judge-texts {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.judge {
+    position: relative;
+    display: table-cell;
+    width: 90px;
+    background-color: white;
+    border: solid 3px #000000;
+    border-radius: 30px;
+
+    vertical-align: middle;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 28px;
+    text-shadow:
+    0 0 10px #000,0 0 10px #000;
+    padding: 10px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/*勝敗の強調（光らせる）*/
+.judge.active {
+    color: #fff;  /* 文字自体は白 */
+    background-color: #FFB366; /* 背景色（オレンジ） */
+    padding: 10px;  /* 背景の余白を確保 */
+    border-radius: 30px; /* 丸い角 */
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.7); /* 背景の周りに赤い光 */
+}
+
+/* フォントを読み込む */
+@font-face {
+    font-family: "keifont";  /* フォント名 */
+    src: url("fonts/keifont.ttf") format("truetype");  /* フォントファイルのパス */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* タイトルにカスタムフォントを適用 */
+h1 {
+    font-family: "keifont", sans-serif;
+    font-size: 5.5rem;  /* サイズは任意で調整 */
+    margin-top: 20px;
+}
+
+/* ジャンケンマン部分のスタイル */
+.title-part {
+    color: #B3B3B3;  /* グレー */
+    text-shadow: 
+        1px 1px 0px #666666,
+        -1px -1px 0px #666666,
+        1px -1px 0px #666666,
+        -1px 1px 0px #666666;
+    font-weight: bold;
+}
+
+/* 風ゲーム部分のスタイル */
+.subtitle-part {
+    color: #F4E816;   /* 黄色 */
+    text-shadow: 
+        1px 1px 0px #4d4d4d,
+        -1px -1px 0px #4d4d4d,
+        1px -1px 0px #4d4d4d,
+        -1px 1px 0px #4d4d4d;
+    font-weight: bold;
+}
+
+
+.start-button {
+    padding: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5%;
+    display: block;
+    margin: 10px auto;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+#result {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #333;
+    z-index: 2;/*結果をプレイヤーの選択肢の後ろに配置*/
+}
+
+/* ボタンを中央に配置 */
+.button-container {
+    display: flex;
+    justify-content: center; /* 水平方向に中央配置 */
+    align-items: center; /* 垂直方向に中央配置 */
+    flex-direction: column;
+    gap: 20px;  /* ボタン間の隙間 */
+    margin-top: 20px;
+}
+
+/* 再試行ボタン */
+.play-again, .next-stage {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 40px;
+    cursor: pointer;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    display: none; /*最初は非表示*/
+}
+
+.restart {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 40px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    display: none; /*最初は非表示*/
+}
+
+/* もう１回ボタン、次のステージボタンにホバーした時 */
+.play-again:hover, .next-stage:hover:hover {
+    background-color: #1976D2;
+}
+
+/* スタートボタン、最初からやり直すボタンにホバーした時 */
+.start-button:hover, .restart:hover {
+    background-color: #2C662E;
+}
+
+/* ステージ情報と勝利数 */
+.stage-info, .win-info, .loss-info {
+    font-size: 18px;
+    margin-top: 10px;
+}
